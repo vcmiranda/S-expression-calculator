@@ -10,9 +10,9 @@ git clone https://github.com/vcmiranda/calc.git
 
 # run calc.js in an environment running node.js
 
-"(add 1 (multiply 2 3))"
+$ node calc.js "(add 1 (multiply 2 3))"
 => 7
 
-"(multiply 2 (add (multiply 2 3) 8))"
+$ node calc.js "(multiply 2 (add (multiply 2 3) 8))"
 => 28
 
