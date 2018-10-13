@@ -1,7 +1,7 @@
 const path = require("path");
 
-const filename = path.basename(__filename);
-let entry = process.argv[process.argv.findIndex(arg => path.basename(arg) === filename) + 1];
+const filename = path.basename(__filename); // It uses built-in node library path to return filename
+let entry = process.argv[process.argv.findIndex(arg => path.basename(arg) === filename) + 1]; // Get string after filename and set as entry data
 let result = 0;
 
 /**
@@ -30,20 +30,20 @@ const calc = (expression) => {
   const operation = data[0],
     input1 = parseFloat(data[1]);
     input2 = parseFloat(data[2]);
-  if (data.length === 3) {
-    if (!isNaN(input1) && !isNaN(input2)) {
-      if (operation === 'add') {
+  if (data.length === 3) {  // Check whether array has exactly 3 elements (operation, input1 and input2)
+    if (!isNaN(input1) && !isNaN(input2)) { // Check whether both inputs are numbers
+      if (operation === 'add') { // Run if operation is addition
         return add(input1, input2);
-      } else if (operation === 'multiply') {
+      } else if (operation === 'multiply') { // Run if operation is multiplication
         return multiply(input1, input2);
       } else {
-        throw new Error('Invalid operation!');
+        throw new Error('Invalid operation!'); // Throw error if neither addition nor multiplication
       }
     } else {
-      throw new Error('Invalid input format!');
+      throw new Error('Invalid input format!'); // Throw error if inputs are not number
     }
   } else {
-    throw new Error('Invalid input format!');
+    throw new Error('Invalid input format!'); // Throw error if less or more than 3 arguments
   }
 }
 
@@ -54,16 +54,16 @@ const calc = (expression) => {
 */
 const main = (entry) => {
   if (entry) {
-    const start = entry.lastIndexOf('(');
-    const end = entry.indexOf(')', start);
-    const string = entry.substring(start + 1, end);
-    if (start > -1) {
-      result = calc(string);
-      entry = entry.replace(entry.slice(start, end + 1), result);
+    const start = entry.lastIndexOf('('); // Get last start parenthesis
+    const end = entry.indexOf(')', start); // Get first end parenthesis after previous start parenthesis
+    const string = entry.substring(start + 1, end); // Set string to be used
+    if (start > -1) { // Run if parenthesis is found
+      result = calc(string); // Return calculation
+      entry = entry.replace(entry.slice(start, end + 1), result); // Reset entry string
     } else {
-      entry = null;
+      entry = null; // Define entry as null when no more parenthesis found
     }
-    main(entry);
+    main(entry); // Recall function
   }
 }
 
@@ -74,5 +74,5 @@ catch(err) {
   result = `${err.name}: ${err.message}`;
 }
 finally {
-  console.log(result);
+  console.log(`\nResult: ${result}\n`);
 }
