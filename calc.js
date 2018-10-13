@@ -1,8 +1,21 @@
 const path = require("path");
 
+let result = 0;
 const filename = path.basename(__filename); // It uses built-in node library path to return filename
 let entry = process.argv[process.argv.findIndex(arg => path.basename(arg) === filename) + 1]; // Get string after filename and set as entry data
-let result = 0;
+
+
+/**
+ * @description - Check whether entry string has chars after or before initial and final parenthesis
+ * @param {String}  data - Expression brought from single argument entered by user.
+ * @return {Boolean} - Returns true if no extra chars.
+*/
+const checkEntry = (data) => {
+  const checkStart = data.substring(0, data.indexOf('('));
+  const checkEnd = data.substring(data.lastIndexOf(')') + 1);
+  return checkStart || checkEnd ? true : false;
+}
+
 
 /**
  * @description - Add two numbers
@@ -12,6 +25,7 @@ let result = 0;
 */
 const add = (x, y) => x + y;
 
+
 /**
  * @description - Multiply two numbers
  * @param {Numbe}  x - Number.
@@ -19,6 +33,7 @@ const add = (x, y) => x + y;
  * @return {Number} - Returns result of numbers multiplied.
 */
 const multiply = (x, y) => x * y;
+
 
 /**
  * @description - Evaluate what operation needs to be executed
@@ -40,12 +55,13 @@ const calc = (expression) => {
         throw new Error('Invalid operation!'); // Throw error if neither addition nor multiplication
       }
     } else {
-      throw new Error('Invalid input format!'); // Throw error if inputs are not number
+      throw new Error('Invalid input!'); // Throw error if inputs are not number
     }
   } else {
-    throw new Error('Invalid input format!'); // Throw error if less or more than 3 arguments
+    throw new Error('Invalid input!'); // Throw error if less or more than 3 arguments
   }
 }
+
 
 /**
  * @description - Evaluate entered expression, call each operation individually, set data for next operation, and return final result
@@ -68,11 +84,16 @@ const main = (entry) => {
 }
 
 try {
-  main(entry);
+  if (checkEntry(entry)) {
+    throw new Error('Invalid input!'); // Throw error if input
+  } else {
+    main(entry);
+    result = (`\nResult: ${result}\n`);
+  }
 }
 catch(err) {
-  result = `${err.name}: ${err.message}`;
+  result = `\n${err.name}: ${err.message}\n`;
 }
 finally {
-  console.log(`\nResult: ${result}\n`);
+  console.log(result);
 }
