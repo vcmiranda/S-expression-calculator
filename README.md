@@ -5,11 +5,8 @@
 ## Quick Start
 
 ``` bash
-# clone git repository
-git clone https://github.com/vcmiranda/calc.git
-
-# enter calc folder
-cd calc
+# clone git repository and enter calc folder
+git clone https://github.com/vcmiranda/S-expression-calculator.git && cd S-expression-calculator
 
 # run calc.js in an environment running node.js
 
