@@ -12,6 +12,8 @@ git clone https://github.com/vcmiranda/S-expression-calculator.git && cd S-expre
 
 Samples
 
+$ node calc.js 123
+=> 123
 $ node calc.js "(add 1 (multiply 2 3))"
 => 7
 $ node calc.js "(multiply 2 (add (multiply 2 3) 8))"
