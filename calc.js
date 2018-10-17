@@ -4,19 +4,6 @@ let result = 0;
 const filename = path.basename(__filename); // It uses built-in node library path to return filename
 let entry = process.argv[process.argv.findIndex(arg => path.basename(arg) === filename) + 1]; // Get string after filename and set as entry data
 
-
-/**
- * @description - Checks whether entry string has chars after or before initial and final parenthesis
- * @param {String}  data - Expression brought from single argument entered by user.
- * @return {Boolean} - Returns true if no extra chars.
-*/
-const checkEntry = (data) => {
-  const checkStart = data.substring(0, data.indexOf('(')); // Checks whether there are characters before initial parenthesis 
-  const checkEnd = data.substring(data.lastIndexOf(')') + 1); // Checks whether there are characters after final parenthesis
-  return checkStart || checkEnd ? true : false; // Returns true if exists ex
-}
-
-
 /**
  * @description - Adds two numbers
  * @param {Number}  x - Number.
@@ -83,13 +70,29 @@ const main = (entry) => {
   }
 }
 
-try {
-  if (checkEntry(entry)) {
-    throw new Error('Invalid input!'); // Throws error if invalid input
+/**
+ * @description - Checks whether entry string has chars after or before initial and final parenthesis
+ * @param {String}  data - Expression brought from single argument entered by user.
+ * @return {Boolean} - Returns true if no extra chars.
+*/
+const start = (data) => {
+  if (!isNaN(data)) {
+    result = (`\nResult: ${data}\n`); // Sets valid result
   } else {
-    main(entry); // Runs main code
-    result = (`\nResult: ${result}\n`); // Sets valid result
+    const checkStart = data.substring(0, data.indexOf('(')); // Checks whether there are characters before initial parenthesis 
+    const checkEnd = data.substring(data.lastIndexOf(')') + 1); // Checks whether there are characters after final parenthesis
+    const checkEntry = checkStart || checkEnd ? true : false; // Returns true if exists characters
+    if (checkEntry) {
+      throw new Error('Invalid input!'); // Throws error if invalid input
+    } else {
+      main(entry); // Runs main code
+      result = (`\nResult: ${result}\n`); // Sets valid result
+    }
   }
+}
+
+try {
+  start(entry);
 }
 catch(err) {
   result = `\n${err.name}: ${err.message}\n`; // Sets error message
